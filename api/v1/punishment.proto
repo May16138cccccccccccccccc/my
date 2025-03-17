@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "gogoproto/gogo.proto";
+// import "validate/validate.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+package api.v1;
+
+option go_package = "moredoc/api/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.v1";
+
+// 这里是proto文件中的结构体，可以根据需要删除或者调整
+message Punishment {
+  google.protobuf.Timestamp end_time = 1 [ (gogoproto.stdtime) = true ];
+  google.protobuf.Timestamp created_at = 2 [ (gogoproto.stdtime) = true ];
+  google.protobuf.Timestamp updated_at = 3 [ (gogoproto.stdtime) = true ];
+  int64 id = 4;
+  int64 user_id = 5;
+  int32 type = 6;
+  bool enable = 7;
+  string operators = 8;
+  string remark = 9;
+  string reason = 10;
+  string username = 11;
+}
+
+message CancelPunishmentRequest { repeated int64 id = 1; }
+
+message GetPunishmentRequest { int64 id = 1; }
+
+message ListPunishmentRequest {
+  int64 page = 1;
+  int64 size = 2;
+  string wd = 3;
+  repeated string field = 4;
+  string order = 5;
+  repeated int32 type = 6;
+  repeated int32 enable = 7;
+  repeated int64 user_id = 8;
+}
+
+message CreatePunishmentRequest {
+  google.protobuf.Timestamp end_time = 1 [ (gogoproto.stdtime) = true ];
+  int64 id = 2;
+  repeated int64 user_id = 3;
+  repeated int32 type = 4;
+  bool enable = 5;
+  string remark = 6;
+  string reason = 7;
+}
+
+message ListPunishmentReply {
+  int64 total = 1;
+  repeated Punishment punishment = 2;
+}
+
+service PunishmentAPI {
+  rpc CreatePunishment(CreatePunishmentRequest)
+      returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post : '/api/v1/punishment',
+      body : '*',
+    };
+  }
+
+  rpc UpdatePunishment(Punishment) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put : '/api/v1/punishment',
+      body : '*',
+    };
+  }
+
+  rpc GetPunishment(GetPunishmentRequest) returns (Punishment) {
+    option (google.api.http) = {
+      get : '/api/v1/punishment',
+    };
+  }
+
+  rpc ListPunishment(ListPunishmentRequest) returns (ListPunishmentReply) {
+    option (google.api.http) = {
+      get : '/api/v1/punishment/list',
+    };
+  }
+
+  // 批量取消惩罚
+  rpc CancelPunishment(CancelPunishmentRequest)
+      returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put : '/api/v1/punishment/cancel',
+      body : '*',
+    };
+  }
+}

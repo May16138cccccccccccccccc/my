@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="moredoc-master">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/documents.zip!/" />
+      <root url="jar://$PROJECT_DIR$/y.zip!/" />
+      <root url="jar://$PROJECT_DIR$/uploads.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

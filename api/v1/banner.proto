@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "gogoproto/gogo.proto";
+// import "validate/validate.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+package api.v1;
+
+option go_package = "moredoc/api/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.v1";
+
+// banner，轮播图
+message Banner {
+  int64 id = 1;     // 主键
+  string title = 2; // 标题，名称
+  string path = 3;  // 图片地址
+  int32 sort = 4;   // 排序，值越大越靠前
+  bool enable = 5;  // 是否启用
+  int32 type =
+      6; // 类型，如PC轮播图、小程序轮播图等，见 web/utils/enum.js 中的枚举
+  string url = 7;         // 跳转地址
+  string description = 8; // 描述
+  google.protobuf.Timestamp created_at = 9
+      [ (gogoproto.stdtime) = true ]; // 创建时间
+  google.protobuf.Timestamp updated_at = 10
+      [ (gogoproto.stdtime) = true ]; // 更新时间
+}
+
+// 删除轮播图
+message DeleteBannerRequest { repeated int64 id = 1; }
+
+// 获取轮播图
+message GetBannerRequest { int64 id = 1; }
+
+// 轮播图列表请求
+message ListBannerRequest {
+  int64 page = 1;            // 页码
+  int64 size = 2;            // 每页数量
+  repeated int32 type = 3;   // 类型
+  repeated bool enable = 4;  // 是否启用
+  string wd = 5;             // 搜索关键字
+  repeated string field = 6; // 查询字段，不指定，则查询全部
+}
+
+// 轮播图列表
+message ListBannerReply {
+  int64 total = 1;            // 总数
+  repeated Banner banner = 2; // 轮播图数组
+}
+
+// 轮播图API服务
+service BannerAPI {
+
+  // 创建轮播图
+  rpc CreateBanner(Banner) returns (Banner) {
+    option (google.api.http) = {
+      post : '/api/v1/banner',
+      body : '*',
+    };
+  }
+
+  // 更新轮播图
+  rpc UpdateBanner(Banner) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put : '/api/v1/banner',
+      body : '*',
+    };
+  }
+
+  // 删除轮播图
+  rpc DeleteBanner(DeleteBannerRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete : '/api/v1/banner',
+    };
+  }
+
+  // 查询轮播图
+  rpc GetBanner(GetBannerRequest) returns (Banner) {
+    option (google.api.http) = {
+      get : '/api/v1/banner',
+    };
+  }
+
+  // 轮播图列表
+  rpc ListBanner(ListBannerRequest) returns (ListBannerReply) {
+    option (google.api.http) = {
+      get : '/api/v1/banner/list',
+    };
+  }
+}

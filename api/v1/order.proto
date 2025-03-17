@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+// import "validate/validate.proto";
+import "google/api/annotations.proto";
+
+package api.v1;
+
+option go_package = "moredoc/api/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.v1";
+
+
+
+service PaymentService {
+  rpc CreatePayment(CreatePaymentRequest) returns (CreatePaymentResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/order/payment"
+      body: "*"
+    };
+  }
+}
+
+message CreatePaymentRequest {
+  string order_id = 1;
+  double amount = 2;
+  string subject = 3;
+}
+
+message CreatePaymentResponse {
+  string payment_url = 1;
+}

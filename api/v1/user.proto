@@ -1,0 +1,359 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "gogoproto/gogo.proto";
+// import "validate/validate.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "api/v1/permission.proto";
+import "api/v1/download.proto";
+
+package api.v1;
+
+option go_package = "moredoc/api/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.v1";
+
+// 用户信息
+message User {
+  google.protobuf.Timestamp login_at = 19
+      [ (gogoproto.stdtime) = true ]; // 最后登录时间
+  google.protobuf.Timestamp created_at = 20
+      [ (gogoproto.stdtime) = true ]; // 注册时间
+  google.protobuf.Timestamp updated_at = 21
+      [ (gogoproto.stdtime) = true ]; // 更新时间
+  int64 id = 1;                       // 用户ID
+  string username = 2;                // 用户名
+  string mobile = 3;                  // 手机号
+  string email = 4;                   // 邮箱，唯一
+  string address = 5;                 // 地址
+  string signature = 6;               // 个性签名
+  string last_login_ip = 7;           // 最后登录IP
+  string register_ip = 8;             // 注册IP
+  int32 doc_count = 9;                // 文档数量
+  int32 follow_count = 10;            // 关注数量
+  int32 fans_count = 11;              // 粉丝数量
+  int32 favorite_count = 12;          // 收藏数量
+  int32 comment_count = 13;           // 评论数量
+  int32 status = 14; // 用户状态，见 web/utils/enum.js，当前没有使用
+  string avatar = 15;           // 头像
+  string identity = 16;         // 身份证
+  string realname = 17;         // 真实姓名
+  repeated int64 group_id = 18; // 用户组ID
+  int32 credit_count = 22;      // 积分
+  int32 article_count = 23;     // 文章数量
+  string remark = 24;           // 备注
+}
+
+// 用户注册登录请求
+message RegisterAndLoginRequest {
+  string username = 1
+      [ (gogoproto.moretags) = "validate:\"min=3,max=32\"" ]; // 用户名
+  string password = 2 [ (gogoproto.moretags) = "validate:\"min=6\"" ]; // 密码
+  string captcha = 3;    // 验证码
+  string captcha_id = 4; // 验证码ID
+  string email = 5;      // 邮箱
+  string code = 6; // 邮箱验证码(如果用户注册需要验证邮箱，则必须传递该参数)
+}
+
+enum EmailCodeType {
+  EmailCodeTypeRegister = 0; // 注册
+  EmailCodeTypeLogin = 1;    // 登录
+  // EmailCodeTypeFindPassword = 2; // 找回密码
+}
+
+message SendEmailCodeRequest {
+  string email = 1; // 邮箱
+  string captcha = 2;
+  string captcha_id = 3;
+  EmailCodeType type = 4;
+}
+
+// 查询验证码请求
+message GetUserCaptchaRequest {
+  string type =
+      1; // 验证码类型：register、login、comment、find_password、upload
+}
+
+// 用户登录响应
+message LoginReply {
+  string token = 1;
+  User user = 2;
+}
+
+// 删除用户
+message DeleteUserRequest { repeated int64 id = 1; }
+
+// 获取用户信息
+message GetUserRequest { int64 id = 1; }
+
+// 找回密码
+message FindPasswordRequest {
+  string email = 1; // 邮箱
+  string token = 2; // 签名token
+  string password = 3 [ (gogoproto.moretags) = "validate:\"min=6\"" ]; // 新密码
+  string captcha = 4;    // 验证码
+  string captcha_id = 5; // 验证码ID
+}
+
+// 用户列表请求
+message ListUserRequest {
+  int64 page = 1;              // 页码
+  int64 size = 2;              // 每页数量
+  string wd = 3;               // 搜索关键词
+  string sort = 4;             // 排序字段
+  repeated int64 id = 5;       // 用户ID
+  repeated int64 group_id = 6; // 用户组ID
+  repeated int32 status = 7;   // 用户状态
+  int64 limit = 8; // 请求数量限制，大于0时，page和size无效
+  repeated string field = 9; // 返回字段
+}
+
+// 用户列表响应
+message ListUserReply {
+  int64 total = 1;        // 总数
+  repeated User user = 2; // 用户列表
+}
+
+// 验证码响应
+message GetUserCaptchaReply {
+  bool enable = 1;    // 是否启用验证码
+  string id = 2;      // 验证码ID
+  string captcha = 3; // 验证码
+  string type = 4;    // 验证码类型
+}
+
+// 修改用户密码
+message UpdateUserPasswordRequest {
+  int64 id = 1;            // 用户ID
+  string old_password = 2; // 旧密码
+  string new_password = 3
+      [ (gogoproto.moretags) = "validate:\"min=6\"" ]; // 新密码
+}
+
+// 用户权限信息查询
+message GetUserPermissionsReply { repeated Permission permission = 1; }
+
+// 管理后台设置用户信息
+message SetUserRequest {
+  int64 id = 1; // 用户ID
+  string username = 2
+      [ (gogoproto.moretags) = "validate:\"min=3,max=32\"" ]; // 用户名
+  string password = 3 [ (gogoproto.moretags) = "validate:\"min=6\"" ]; // 密码
+  repeated int64 group_id = 4; // 用户组ID
+  string email = 5;            // 邮箱
+}
+
+// 用户动态
+message Dynamic {
+  int64 id = 1;        // 动态ID
+  int64 user_id = 2;   // 用户ID
+  string content = 3;  // 内容
+  int32 type = 4;      // 类型
+  string username = 7; // 用户名
+  google.protobuf.Timestamp created_at = 5
+      [ (gogoproto.stdtime) = true ]; // 创建时间
+  google.protobuf.Timestamp updated_at = 6
+      [ (gogoproto.stdtime) = true ]; // 更新时间
+}
+
+// 用户动态列表请求
+message ListUserDynamicRequest {
+  int64 page = 1; // 页码
+  int64 size = 2; // 每页数量
+  // int64 id = 3;   // 用户ID
+  reserved 3;
+}
+
+// 用户动态列表响应
+message ListUserDynamicReply {
+  int64 total = 1;              // 总数
+  repeated Dynamic dynamic = 2; // 动态列表
+}
+
+// 用户签到
+message Sign {
+  int64 id = 1;      // 签到ID
+  int64 user_id = 2; // 用户ID
+  int32 sign_at = 3; // 签到日期
+  string ip = 4;     // 签到IP
+  google.protobuf.Timestamp created_at = 5
+      [ (gogoproto.stdtime) = true ]; // 创建时间
+  int32 award = 6;                    // 签到积分奖励
+}
+
+message ListUserDownloadRequest {
+  int64 page = 1; // 页码
+  int64 size = 2; // 每页数量
+}
+
+message ListUserDownloadReply {
+  int64 total = 1;                // 总数
+  repeated Download download = 2; // 下载列表
+}
+
+service UserAPI {
+  // 用户注册
+  rpc Register(RegisterAndLoginRequest) returns (LoginReply) {
+    option (google.api.http) = {
+      post : '/api/v1/user/register',
+      body : '*',
+    };
+  }
+
+  // 用户登录
+  rpc Login(RegisterAndLoginRequest) returns (LoginReply) {
+    option (google.api.http) = {
+      post : '/api/v1/user/login',
+      body : '*',
+    };
+  }
+
+  // 退出登录
+  rpc Logout(google.protobuf.Empty) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete : '/api/v1/user/logout',
+    };
+  }
+
+  // 查询用户信息。如果传递了Id参数，则表示查询用户的公开信息，否则查询当前用户的私有信息
+  rpc GetUser(GetUserRequest) returns (User) {
+    option (google.api.http) = {
+      get : '/api/v1/user',
+    };
+  }
+
+  // 更新用户密码。如果不传用户ID，则表示更新当前用户的密码；
+  // 如果穿了用户ID，则表示更新指定用户的密码，这时需要验证当前用户的权限
+  rpc UpdateUserPassword(UpdateUserPasswordRequest)
+      returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put : '/api/v1/user/password',
+      body : '*',
+    };
+  }
+
+  // 更新用户密码。如果不传用户ID，则表示更新当前用户的密码；
+  // 如果穿了用户ID，则表示更新指定用户的密码，这时需要验证当前用户的权限
+  rpc UpdateUserProfile(User) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put : '/api/v1/user/profile',
+      body : '*',
+    };
+  }
+
+  // 删除用户。需要验证用户权限
+  rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete : '/api/v1/user',
+    };
+  }
+
+  // 新增用户
+  rpc AddUser(SetUserRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post : '/api/v1/user',
+      body : '*',
+    };
+  }
+
+  // 设置用户
+  rpc SetUser(SetUserRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put : '/api/v1/user',
+      body : '*',
+    };
+  }
+
+  // 查询用户列表。对于非管理员，返回相应用户的公开信息；
+  // 对于管理员，返回相应用户的绝大部分信息
+  rpc ListUser(ListUserRequest) returns (ListUserReply) {
+    option (google.api.http) = {
+      get : '/api/v1/user/list',
+    };
+  }
+
+  // GetUserCaptcha 获取用户验证码
+  rpc GetUserCaptcha(GetUserCaptchaRequest) returns (GetUserCaptchaReply) {
+    option (google.api.http) = {
+      get : '/api/v1/user/captcha',
+    };
+  }
+
+  // GetUserCaptcha 获取用户验证码
+  rpc GetUserPermissions(google.protobuf.Empty)
+      returns (GetUserPermissionsReply) {
+    option (google.api.http) = {
+      get : '/api/v1/user/permission',
+    };
+  }
+
+  // 用户是否可以上传文档
+  rpc CanIUploadDocument(google.protobuf.Empty)
+      returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get : '/api/v1/user/caniuploaddocument',
+    };
+  }
+
+  // 用户是否可以发布文章
+  rpc CanIPublishArticle(google.protobuf.Empty)
+      returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get : '/api/v1/user/canipublisharticle',
+    };
+  }
+
+  // 获取用户动态，包括获取关注的用户的动态
+  rpc ListUserDynamic(ListUserDynamicRequest) returns (ListUserDynamicReply) {
+    option (google.api.http) = {
+      get : '/api/v1/user/dynamic',
+    };
+  }
+
+  // 每日签到
+  rpc SignToday(google.protobuf.Empty) returns (Sign) {
+    option (google.api.http) = {
+      put : '/api/v1/user/sign',
+    };
+  }
+
+  // 获取今日已签到记录
+  rpc GetSignedToday(google.protobuf.Empty) returns (Sign) {
+    option (google.api.http) = {
+      get : '/api/v1/user/sign',
+    };
+  }
+
+  // 查询用户的下载记录
+  rpc ListUserDownload(ListUserDownloadRequest)
+      returns (ListUserDownloadReply) {
+    option (google.api.http) = {
+      get : '/api/v1/user/download',
+    };
+  }
+
+  // 找回密码：第一步，发送验证码
+  rpc FindPasswordStepOne(FindPasswordRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post : '/api/v1/user/findpassword/stepone',
+      body : '*',
+    };
+  }
+
+  // 找回密码：第二步，修改密码
+  rpc FindPasswordStepTwo(FindPasswordRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put : '/api/v1/user/findpassword/steptwo',
+      body : '*',
+    };
+  }
+
+  // 发送邮箱验证码。
+  rpc SendEmailCode(SendEmailCodeRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post : '/api/v1/user/email/code',
+      body : '*',
+    };
+  }
+}

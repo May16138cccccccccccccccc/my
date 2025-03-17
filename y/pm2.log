@@ -1,0 +1,80 @@
+2025-02-13T11:26:44: PM2 log: ===============================================================================
+2025-02-13T11:26:44: PM2 log: --- New PM2 Daemon started ----------------------------------------------------
+2025-02-13T11:26:44: PM2 log: Time                 : Thu Feb 13 2025 11:26:44 GMT+0800 (中国标准时间)
+2025-02-13T11:26:44: PM2 log: PM2 version          : 5.4.3
+2025-02-13T11:26:44: PM2 log: Node.js version      : 14.16.0
+2025-02-13T11:26:44: PM2 log: Current arch         : x64
+2025-02-13T11:26:44: PM2 log: PM2 home             : y
+2025-02-13T11:26:44: PM2 log: PM2 PID file         : E:\qibu\gosoft\go\src\moredoc-master\y\pm2.pid
+2025-02-13T11:26:44: PM2 log: RPC socket file      : \\.\pipe\rpc.sock
+2025-02-13T11:26:44: PM2 log: BUS socket file      : \\.\pipe\pub.sock
+2025-02-13T11:26:44: PM2 log: Application log path : E:\qibu\gosoft\go\src\moredoc-master\y\logs
+2025-02-13T11:26:44: PM2 log: Worker Interval      : 30000
+2025-02-13T11:26:44: PM2 log: Process dump file    : E:\qibu\gosoft\go\src\moredoc-master\y\dump.pm2
+2025-02-13T11:26:44: PM2 log: Concurrent actions   : 2
+2025-02-13T11:26:44: PM2 log: SIGTERM timeout      : 1600
+2025-02-13T11:26:44: PM2 log: ===============================================================================
+2025-02-17T08:55:08: PM2 log: ===============================================================================
+2025-02-17T08:55:08: PM2 log: --- New PM2 Daemon started ----------------------------------------------------
+2025-02-17T08:55:08: PM2 log: Time                 : Mon Feb 17 2025 08:55:08 GMT+0800 (中国标准时间)
+2025-02-17T08:55:08: PM2 log: PM2 version          : 5.4.3
+2025-02-17T08:55:08: PM2 log: Node.js version      : 14.16.0
+2025-02-17T08:55:08: PM2 log: Current arch         : x64
+2025-02-17T08:55:08: PM2 log: PM2 home             : y
+2025-02-17T08:55:08: PM2 log: PM2 PID file         : E:\qibu\gosoft\go\src\moredoc-master\y\pm2.pid
+2025-02-17T08:55:08: PM2 log: RPC socket file      : \\.\pipe\rpc.sock
+2025-02-17T08:55:08: PM2 log: BUS socket file      : \\.\pipe\pub.sock
+2025-02-17T08:55:08: PM2 log: Application log path : E:\qibu\gosoft\go\src\moredoc-master\y\logs
+2025-02-17T08:55:08: PM2 log: Worker Interval      : 30000
+2025-02-17T08:55:08: PM2 log: Process dump file    : E:\qibu\gosoft\go\src\moredoc-master\y\dump.pm2
+2025-02-17T08:55:08: PM2 log: Concurrent actions   : 2
+2025-02-17T08:55:08: PM2 log: SIGTERM timeout      : 1600
+2025-02-17T08:55:08: PM2 log: ===============================================================================
+2025-03-05T17:47:28: PM2 log: ===============================================================================
+2025-03-05T17:47:28: PM2 log: --- New PM2 Daemon started ----------------------------------------------------
+2025-03-05T17:47:28: PM2 log: Time                 : Wed Mar 05 2025 17:47:28 GMT+0800 (中国标准时间)
+2025-03-05T17:47:28: PM2 log: PM2 version          : 5.4.3
+2025-03-05T17:47:28: PM2 log: Node.js version      : 14.16.0
+2025-03-05T17:47:28: PM2 log: Current arch         : x64
+2025-03-05T17:47:28: PM2 log: PM2 home             : y
+2025-03-05T17:47:28: PM2 log: PM2 PID file         : E:\qibu\gosoft\github\qibu_master_rep\y\pm2.pid
+2025-03-05T17:47:28: PM2 log: RPC socket file      : \\.\pipe\rpc.sock
+2025-03-05T17:47:28: PM2 log: BUS socket file      : \\.\pipe\pub.sock
+2025-03-05T17:47:28: PM2 log: Application log path : E:\qibu\gosoft\github\qibu_master_rep\y\logs
+2025-03-05T17:47:28: PM2 log: Worker Interval      : 30000
+2025-03-05T17:47:28: PM2 log: Process dump file    : E:\qibu\gosoft\github\qibu_master_rep\y\dump.pm2
+2025-03-05T17:47:28: PM2 log: Concurrent actions   : 2
+2025-03-05T17:47:28: PM2 log: SIGTERM timeout      : 1600
+2025-03-05T17:47:28: PM2 log: ===============================================================================
+2025-03-10T11:00:43: PM2 log: ===============================================================================
+2025-03-10T11:00:43: PM2 log: --- New PM2 Daemon started ----------------------------------------------------
+2025-03-10T11:00:43: PM2 log: Time                 : Mon Mar 10 2025 11:00:43 GMT+0800 (中国标准时间)
+2025-03-10T11:00:43: PM2 log: PM2 version          : 5.4.3
+2025-03-10T11:00:43: PM2 log: Node.js version      : 14.16.0
+2025-03-10T11:00:43: PM2 log: Current arch         : x64
+2025-03-10T11:00:43: PM2 log: PM2 home             : y
+2025-03-10T11:00:43: PM2 log: PM2 PID file         : E:\qibu\gosoft\github\qibu_master_rep\y\pm2.pid
+2025-03-10T11:00:43: PM2 log: RPC socket file      : \\.\pipe\rpc.sock
+2025-03-10T11:00:43: PM2 log: BUS socket file      : \\.\pipe\pub.sock
+2025-03-10T11:00:43: PM2 log: Application log path : E:\qibu\gosoft\github\qibu_master_rep\y\logs
+2025-03-10T11:00:43: PM2 log: Worker Interval      : 30000
+2025-03-10T11:00:43: PM2 log: Process dump file    : E:\qibu\gosoft\github\qibu_master_rep\y\dump.pm2
+2025-03-10T11:00:43: PM2 log: Concurrent actions   : 2
+2025-03-10T11:00:43: PM2 log: SIGTERM timeout      : 1600
+2025-03-10T11:00:43: PM2 log: ===============================================================================
+2025-03-11T09:54:10: PM2 log: ===============================================================================
+2025-03-11T09:54:10: PM2 log: --- New PM2 Daemon started ----------------------------------------------------
+2025-03-11T09:54:10: PM2 log: Time                 : Tue Mar 11 2025 09:54:10 GMT+0800 (中国标准时间)
+2025-03-11T09:54:10: PM2 log: PM2 version          : 5.4.3
+2025-03-11T09:54:10: PM2 log: Node.js version      : 14.16.0
+2025-03-11T09:54:10: PM2 log: Current arch         : x64
+2025-03-11T09:54:10: PM2 log: PM2 home             : y
+2025-03-11T09:54:10: PM2 log: PM2 PID file         : E:\qibu\gosoft\github\qibu_master_rep\y\pm2.pid
+2025-03-11T09:54:10: PM2 log: RPC socket file      : \\.\pipe\rpc.sock
+2025-03-11T09:54:10: PM2 log: BUS socket file      : \\.\pipe\pub.sock
+2025-03-11T09:54:10: PM2 log: Application log path : E:\qibu\gosoft\github\qibu_master_rep\y\logs
+2025-03-11T09:54:10: PM2 log: Worker Interval      : 30000
+2025-03-11T09:54:10: PM2 log: Process dump file    : E:\qibu\gosoft\github\qibu_master_rep\y\dump.pm2
+2025-03-11T09:54:10: PM2 log: Concurrent actions   : 2
+2025-03-11T09:54:10: PM2 log: SIGTERM timeout      : 1600
+2025-03-11T09:54:10: PM2 log: ===============================================================================
